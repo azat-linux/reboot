@@ -27,7 +27,8 @@ int rebootCallback(struct notifier_block *nb, unsigned long action, void *data)
         p = current->parent;
     }
     dump_stack();
-    msleep(100 * 1000 * 1000);
+    /** Sleep for 10 secs */
+    msleep(10 * 1000);
 
     return 0;
 }
