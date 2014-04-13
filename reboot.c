@@ -2,6 +2,7 @@
 #include <linux/reboot.h>
 #include <linux/printk.h>
 #include <linux/stacktrace.h>
+#include <linux/delay.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Azat Khuzhin <a3at.mail@gmail.com>");
@@ -17,6 +18,7 @@ int rebootCallback(struct notifier_block *nb, unsigned long action, void *data)
 {
     printk(KERN_ALERT "Reboot pressed\n");
     dump_stack();
+    msleep(100 * 1000 * 1000);
 
     return 0;
 }
