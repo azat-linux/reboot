@@ -3,6 +3,7 @@
 #include <linux/printk.h>
 #include <linux/stacktrace.h>
 #include <linux/delay.h>
+#include <linux/sched.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Azat Khuzhin <a3at.mail@gmail.com>");
@@ -16,7 +17,15 @@ module_exit(rebootExit);
 
 int rebootCallback(struct notifier_block *nb, unsigned long action, void *data)
 {
-    printk(KERN_ALERT "Reboot pressed\n");
+    struct task_struct *p = current->parent;
+
+    printk(KERN_ALERT "Reboot called by:\n");
+    while (p) {
+        printk(KERN_ALERT "\tPID: %d Comm: %.20s -> \n",
+               p->pid, p->comm);
+
+        p = current->parent;
+    }
     dump_stack();
     msleep(100 * 1000 * 1000);
 
