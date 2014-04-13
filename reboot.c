@@ -24,7 +24,7 @@ int rebootCallback(struct notifier_block *nb, unsigned long action, void *data)
         printk(KERN_ALERT "\tPID: %d Comm: %.20s -> \n",
                p->pid, p->comm);
 
-        p = current->parent;
+        p = current->real_parent;
     }
     dump_stack();
     /** Sleep for 10 secs */
