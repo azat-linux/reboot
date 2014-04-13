@@ -24,6 +24,7 @@ int rebootCallback(struct notifier_block *nb, unsigned long action, void *data)
 }
 struct notifier_block rebootNotifier = {
     .notifier_call = rebootCallback,
+    .priority = INT_MAX,
 };
 
 static int __init rebootInit(void)
